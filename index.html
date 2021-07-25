@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> (hungry duck)</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="description" content="Interactive Graphics final project a.a. 2020/2021" />
+		<meta name="author" content="Nica Andreea" />
+		<link rel="stylesheet" type="text/css" href="css/duck.css?ts=<?=time()?>&quot" />
+		<link rel="shortcut icon" href="favicon.ico">
+	</head>
+	<script id="vertex-shader" type="x-shader/x-vertex">
+	#version 300 es
+
+	in vec4 aPosition;
+
+	uniform mat4 modelViewMatrix;
+	uniform mat4 projectionMatrix;
+
+	in vec2 vCoord;
+	out vec2 fCoord;
+
+	void main() {
+		fCoord = vCoord;
+		gl_Position = projectionMatrix * modelViewMatrix * vec4(aPosition, 1.0);
+	}
+	</script>
+	<script id="fragment-shader" type="x-shader/x-vertex">
+	#version 300 es
+
+	in vec2 fCoord;
+	out vec4 fColor;
+
+	void main() {
+		fColor = vec4(vec3(fCoord,0.0),1.0);
+	}
+	</script>
+	<script type="text/javascript" src="js/three.js"></script>
+	<script type="text/javascript" src="js/duck.js"></script>
+	<script type="text/javascript" src="Common/InitShaders.js"></script>
+	<script type="text/javascript" src="Common/MVnew.js"></script>
+	<script type="module" scr="Audio/audio.js"></script>
+	<body>
+		<div id="presentation" >
+			<div class="gameInstructions">
+				<h1>Hungry Duck</h1><br><br><br><br>	
+			 <div id="startDiv" style="width:100%; height:100%">
+			 <button class="startButton" id="startButton">START GAME</button>
+			 <h3>Help the hungry duck to eat some fresh fish <br><br>
+				and avoid incoming dangers!<br><br>
+				Move the mouse UP/DOWN to guide Duck <br><br>
+				and LEFT/RIGHT to zoom the camera! <br><br>
+				Press the space bar to pause the game!</h3><br>
+				<h2>GOOD LUCK!</h2>
+			</div>
+		 </div>
+		</div>
+		<div id="scenario" align="center">
+			<div><table id="table1" align="right">
+				<tr>
+				<th>SCORE</th>
+				<th>LEVEL</th>
+				<th>LIFE</th>
+				</tr>
+				<tr>
+				<td id="score">0</td>
+				<td id="level">0</td>
+				<td id="life">3</td>
+				</tr>
+			</table></div>
+			<div class="exitButton" align="left"><button type="button" class="myButton" id="pageReset">EXIT</button></div>
+			<div id="audio">
+			<div class="musicButton" align="left"><button type="button" class="myButton" id="muteAudio">MUTE AUDIO</button></div>
+			<div class="volumeSlider" align="center"><input type="range" min="0" max="1" step="0.1" value="0.3" id="volumeSlider"/></div>
+			</div>
+			<div class="display message--gameOverStopPause" id="gameOver">GAME OVER!</div>
+			<div class="display message--totalScore" id="totalScore">Total Score: </div>
+			<div class="display message--actualLevel" id="currentLevel">Level: </div>
+			<div class="displayLow message--lifePenalty" id="alarmmsg">Ops! You loose a life !</div>
+			<div class="displayLow message--pointWin" id="pointWin">Yeah! So good!</div>
+			<div class="display message--gameOverStopPause" id="pauseGame">Press space bar to resume!<br><br></div>
+		</div>
+	</body>
+</html>
